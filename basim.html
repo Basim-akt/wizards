@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baldness Predictor</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: url("C:/Users/USER/OneDrive/Desktop/BASIM/bald.png") no-repeat center center fixed;
+        background-size: cover;
+        color: white;
+        text-align: center;
+        padding: 20px;
+    }
+    video, canvas {
+        border-radius: 10px;
+        border: 3px solid white;
+        margin-top: 20px;
+    }
+    button {
+        padding: 12px 20px;
+        margin-top: 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        background: #38bdf8;
+        color: white;
+    }
+    #result {
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+        text-shadow: 2px 2px 5px black;
+    }
+</style>
+</head>
+<body>
+
+<h1>നിങ്ങൾ ഭാവിയിൽ മോട്ടയോ???🧑‍🦲</h1>
+<p>Allow webcam access and click "Capture" to check your baldness prediction.</p>
+
+<video id="webcam" autoplay playsinline width="400" height="300"></video>
+<br>
+<button onclick="capturePhoto()">📸 Capture</button>
+
+<canvas id="snapshot" width="400" height="300" style="display:none;"></canvas>
+<div id="result"></div>
+
+<script>
+// Access webcam
+navigator.mediaDevices.getUserMedia({ video: true })
+.then(stream => {
+    document.getElementById('webcam').srcObject = stream;
+})
+.catch(err => {
+    alert("Webcam access denied or not available.");
+    console.error(err);
+});
+
+// Capture photo
+function capturePhoto() {
+    let video = document.getElementById('webcam');
+    let canvas = document.getElementById('snapshot');
+    let context = canvas.getContext('2d');
+
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    // Fake prediction logic
+    let predictions = [
+        "പേടിക്കണ്ട — your hair is safe! 🦁",
+        "Slight hair thinning detected — ശ്രദ്ധിക്കണം കഷണ്ടിക്ക് സാധ്യത ഉണ്ട്! 💇‍♂️",
+        "കഷണ്ടി ലോകത്തേക്ക് സ്വാഗതം! 🧑‍🦲"
+    ];
+    let result = predictions[Math.floor(Math.random() * predictions.length)];
+
+    document.getElementById('result').innerText = result;
+    canvas.style.display = "block";
+}
+</script>
+
+</body>
+</html>
